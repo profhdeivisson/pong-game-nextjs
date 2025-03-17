@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { playSound } from '@/utils/soundUtils';
 
 export function useCountdown({
   gameStateRef,
@@ -46,6 +47,10 @@ export function useCountdown({
       count--;
       if (countdownNumberRef.current) {
         countdownNumberRef.current.textContent = count;
+      }
+
+      if (count === 1) {
+        playSound('/init-game-song.mp3');
       }
       
       if (count <= 0) {

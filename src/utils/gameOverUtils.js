@@ -1,3 +1,5 @@
+import { playSound } from './soundUtils';
+
 export function checkGameOver({
   p1Score,
   p2Score,
@@ -20,9 +22,15 @@ export function checkGameOver({
     if (p1Score >= winningScore) {
       gameOverMessageRef.current.textContent = gameMode === 'multiplayer' ?
         'Jogador 1 venceu!' : 'Você venceu!';
+        playSound('/victorymale-version-230553.mp3');
     } else {
       gameOverMessageRef.current.textContent = gameMode === 'multiplayer' ?
         'Jogador 2 venceu!' : 'Computador venceu!';
+        if (gameMode === 'multiplayer') {
+          playSound('/victorymale-version-230553.mp3');
+        } else {
+          playSound('/you-lose.mp3');
+        }
     }
     gameOverModalRef.current.style.display = 'flex';
   }

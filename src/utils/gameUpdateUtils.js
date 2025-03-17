@@ -1,3 +1,5 @@
+import { playSound } from './soundUtils';
+
 export function updateGame({
   isPaused,
   gameStateRef,
@@ -88,6 +90,8 @@ export function updateGame({
     state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
     state.ballX = paddle1Right + 1;
     state.ballSpeedX += (state.ballSpeedX > 0 ? state.ballAcceleration : -state.ballAcceleration);
+    
+    playSound('/ball-song.mp3');
   }
 
   if (
@@ -101,6 +105,8 @@ export function updateGame({
     state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
     state.ballX = paddle2Left - 21;
     state.ballSpeedX += (state.ballSpeedX > 0 ? state.ballAcceleration : -state.ballAcceleration);
+    
+    playSound('/ball-song.mp3');
   }
 
   if (state.ballX < 0) {
