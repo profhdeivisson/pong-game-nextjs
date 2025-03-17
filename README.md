@@ -4,7 +4,7 @@ Este é um projeto [Next.js](https://nextjs.org) que recria o clássico jogo Pon
 
 ## 🎮 Demonstração
 
-[Jogue aqui](#) <!-- Adicione seu link de deploy quando disponível -->
+[Jogue aqui | ](#) https://pong-game-nextjs.vercel.app
 
 ## 🚀 Funcionalidades
 
