@@ -1,0 +1,34 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 80%;
+}
+
+.gameOverMessage {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.restartBtn {
+  background-color: #4CAF50;
+  margin-right: 10px;
+}
+
+.menuBtn {
+  background-color: #2196F3;
+}

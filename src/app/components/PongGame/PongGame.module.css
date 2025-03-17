@@ -7,19 +7,26 @@
     align-items: center;
 }
 
-.menu {
-    text-align: center;
-    margin-bottom: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
+.pauseInfo {
+    margin-bottom: 10px;
+    color: #666;
+    font-style: italic;
+    font-size: 12px;
 }
 
-.menu h1 {
-    margin-bottom: 20px;
-    color: #333;
+.pauseMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    z-index: 1000;
+    text-shadow: 2px 2px 4px #000;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .gameContainer {
@@ -49,14 +56,14 @@
     display: block !important;
     z-index: 10;
     visibility: visible !important;
+}
 
-    &:nth-child(1) {
-        left: 10px !important;
-    }
+.paddle:nth-child(2) {
+    left: 10px !important;
+}
 
-    &:nth-child(2) {
-        left: 10px !important;
-    }
+.paddle:nth-child(3) {
+    right: 10px !important;
 }
 
 .score {
@@ -70,173 +77,24 @@
     font-weight: bold;
 }
 
-.modal {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
+.playerScore {
+    margin: 0 10px;
 }
 
-.modalContent {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
+.desktopOnly {
+    display: block;
 }
 
-.pauseInfo {
-    text-align: right;
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 5px;
-    display: none;
-}
-
-.pauseButton {
-    background-color: #ff9800;
-    width: 60px;
-    font-weight: bold;
-}
-
-.mobileControls {
-    display: none;
-    margin-top: 20px;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.mobileControls button {
-    width: 30%;
-    height: 60px;
-    font-size: 24px;
-}
-
-.mobileInstructions {
+.mobileOnly {
     display: none;
 }
 
 @media (max-width: 768px) {
-    .gameContainer {
-        height: 400px;
-    }
-    
     .mobileOnly {
         display: block;
     }
-    
-    .mobileControls {
-        display: flex;
-    }
-    
+
     .desktopOnly {
         display: none;
-    }
-}
-
-.modal .modalContent {
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.instructionsText {
-    text-align: left;
-    margin-bottom: 20px;
-}
-
-.instructionsText h3 {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    color: #4CAF50;
-}
-
-.instructionsText h4 {
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
-
-.instructionsText ul {
-    padding-left: 20px;
-}
-
-.instructionsText li {
-    margin-bottom: 5px;
-}
-
-.instructionsBtn {
-    background-color: #2196F3;
-    margin-bottom: 10px;
-}
-
-.instructionsBtn:hover {
-    background-color: #0b7dda;
-}
-
-.closeInstructionsBtn {
-    background-color: #f44336;
-}
-
-.closeInstructionsBtn:hover {
-    background-color: #d32f2f;
-}
-
-.countdownOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    display: none;
-}
-
-.countdownNumber {
-    font-size: 120px;
-    color: white;
-    font-weight: bold;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-.pongLogo {
-    margin: 0 auto 20px;
-    display: block;
-    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
-    max-width: 200px;
-    height: auto;
-}
-
-.pauseMessage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 36px;
-  font-weight: bold;
-  z-index: 1000;
-  text-shadow: 2px 2px 4px #000;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 20px;
-  border-radius: 10px;
-}
-
-@media (max-width: 768px) {
-    .pongLogo {
-        width: 150px;
     }
 }

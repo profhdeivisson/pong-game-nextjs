@@ -1,0 +1,70 @@
+.menu {
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.title {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.pongLogo {
+  margin: 0 auto 20px;
+  display: block;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.2));
+  max-width: 200px;
+  height: auto;
+}
+
+.buttonsContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.instructionsBtn {
+  background-color: #2196F3;
+}
+
+.instructionsBtn:hover {
+  background-color: #0b7dda;
+}
+
+.singlePlayerBtn {
+  background-color: #4CAF50;
+}
+
+.multiPlayerBtn {
+  background-color: #ff9800;
+}
+
+.mobileInstructions {
+  display: none;
+}
+
+.desktopOnly {
+  display: block;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobileOnly {
+    display: block;
+  }
+  
+  .desktopOnly {
+    display: none;
+  }
+  
+  .pongLogo {
+    width: 150px;
+  }
+}

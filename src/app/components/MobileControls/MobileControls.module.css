@@ -1,0 +1,37 @@
+.mobileControls {
+  display: none;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mobileControls button {
+  width: 30%;
+  height: 60px;
+  font-size: 24px;
+}
+
+.upButton, .downButton {
+  background-color: #4CAF50;
+}
+
+.pauseButton {
+  background-color: #ff9800;
+  width: 60px;
+  font-weight: bold;
+}
+
+.disabledButton {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.mobileOnly {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobileOnly {
+    display: flex;
+  }
+}

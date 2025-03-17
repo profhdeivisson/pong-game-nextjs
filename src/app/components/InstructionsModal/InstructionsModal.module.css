@@ -1,0 +1,53 @@
+.modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.instructionsText {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.instructionsText h3 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #4CAF50;
+}
+
+.instructionsText h4 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.instructionsText ul {
+  padding-left: 20px;
+}
+
+.instructionsText li {
+  margin-bottom: 5px;
+}
+
+.closeInstructionsBtn {
+  background-color: #f44336;
+}
+
+.closeInstructionsBtn:hover {
+  background-color: #d32f2f;
+}

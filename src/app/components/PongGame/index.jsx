@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import styles from './PongGame.module.css';
 import { initGame } from '@/utils/initGame';
 import { forceRenderPaddles } from '@/utils/paddleUtils';
@@ -17,6 +16,15 @@ import {
 import { useGameState } from '@/hooks/useGameState';
 import { usePauseManager } from '@/hooks/usePauseManager';
 import { useCountdown } from '@/hooks/useCountdown';
+
+// Import new components
+import Button from '../Button';
+import GameMenu from '../GameMenu';
+import GameBoard from '../GameBoard';
+import InstructionsModal from '../InstructionsModal';
+import MobileControls from '../MobileControls';
+import CountdownOverlay from '../CountdownOverlay';
+import GameOverModal from '../GameOverModal';
 
 export default function PongGame() {
   const {
@@ -253,97 +261,55 @@ export default function PongGame() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.menu} ref={menuRef}>
-        <h1 className={styles.title}>PongStar GAME</h1>
-        <Image
-          src="/pongLogo.svg"
-          alt="Pong Logo"
-          className={styles.pongLogo}
-          height={200}
-          width={200}
-        />
-        <button id="instructionsBtn" className={styles.instructionsBtn} onClick={handleInstructionsClick}>Instruções</button>
-        <button id="singlePlayerBtn" className={styles.singlePlayerBtn} onClick={handleSinglePlayerClick}>Jogar contra Máquina</button>
-        <button id="multiPlayerBtn" className={`${styles.multiPlayerBtn} ${styles.desktopOnly}`} onClick={handleMultiPlayerClick}>Jogar com Amigo</button>
-        <p className={`${styles.mobileInstructions} ${styles.mobileOnly}`}>Use os botões abaixo para controlar sua raquete</p>
-      </div>
+      <GameMenu 
+        menuRef={menuRef}
+        onInstructionsClick={handleInstructionsClick}
+        onSinglePlayerClick={handleSinglePlayerClick}
+        onMultiPlayerClick={handleMultiPlayerClick}
+        isMobile={isMobile}
+      />
 
-      <div className={`${styles.pauseInfo} ${styles.desktopOnly}`} ref={pauseInfoRef}>Aperte a tecla ESC para pausar o jogo</div>
+      <div className={`${styles.pauseInfo} ${styles.desktopOnly}`} ref={pauseInfoRef}>
+        Aperte a tecla ESC para pausar o jogo
+      </div>
 
       <div className={styles.gameContainer} id="gameContainer" ref={gameContainerRef}>
         <div id="ball" className={styles.ball} ref={ballRef}></div>
         <div id="paddle1" className={`${styles.paddle} paddle`} ref={paddle1Ref}></div>
         <div id="paddle2" className={`${styles.paddle} paddle`} ref={paddle2Ref}></div>
+        
         <div id="score" className={styles.score}>
           <span id="player1Score" className={styles.playerScore} ref={player1ScoreRef}>0</span>
           <span>:</span>
           <span id="player2Score" className={styles.playerScore} ref={player2ScoreRef}>0</span>
         </div>
-        <div id="countdownOverlay" className={styles.countdownOverlay} ref={countdownOverlayRef}>
-          <div id="countdownNumber" className={styles.countdownNumber} ref={countdownNumberRef}>3</div>
-        </div>
-        <div id="gameOverModal" className={`${styles.modal}`} ref={gameOverModalRef}>
-          <div className={`${styles.modalContent}`}>
-            <h2 id="gameOverMessage" className={styles.gameOverMessage} ref={gameOverMessageRef}></h2>
-            <button id="restartBtn" className={styles.restartBtn} onClick={restartGame}>Jogar Novamente</button>
-            <button id="menuBtn" className={styles.menuBtn} onClick={showMenu}>Voltar ao Menu</button>
-          </div>
-        </div>
+        
+        <CountdownOverlay 
+          countdownOverlayRef={countdownOverlayRef}
+          countdownNumberRef={countdownNumberRef}
+        />
+        
+        <GameOverModal 
+          gameOverModalRef={gameOverModalRef}
+          gameOverMessageRef={gameOverMessageRef}
+          onRestartGame={restartGame}
+          onShowMenu={showMenu}
+        />
       </div>
 
-      <div id="instructionsModal" className={styles.modal}>
-        <div className={styles.modalContent}>
-          <h2 className={styles.instructionsTitle}>Instruções do Jogo</h2>
-          <div className={styles.instructionsText}>
-            <h3>Como Jogar:</h3>
-            <p>O objetivo é rebater a bola com sua raquete e fazer pontos quando o oponente não conseguir rebater.</p>
-
-            <h3>Controles:</h3>
-            <h4>No Computador:</h4>
-            <ul>
-              <li><strong>Jogador 1:</strong> Use as teclas W (cima) e S (baixo) para mover sua raquete</li>
-              <li><strong>Jogador 2:</strong> Use as teclas de seta ↑ (cima) e ↓ (baixo) para mover sua raquete</li>
-              <li><strong>Modo contra Máquina:</strong> Você pode usar tanto W/S quanto as setas para controlar sua raquete</li>
-            </ul>
-
-            <h4>No Celular:</h4>
-            <ul>
-              <li>Use os botões ▲ e ▼ na tela para mover sua raquete</li>
-            </ul>
-
-            <h3>Modos de Jogo:</h3>
-            <ul>
-              <li><strong>Jogar contra Máquina:</strong> Você contra o computador</li>
-              <li><strong>Jogar com Amigo:</strong> Dois jogadores no mesmo dispositivo (disponível apenas em computadores)</li>
-            </ul>
-          </div>
-          <button id="closeInstructionsBtn" className={styles.closeInstructionsBtn} onClick={closeInstructions}>Fechar</button>
-        </div>
-      </div>
+      <InstructionsModal onClose={closeInstructions} />
 
       {gameMode && isMobile && (
-        <div className={`${styles.mobileControls} ${styles.mobileOnly}`}>
-          <button id="upButton"
-            className={styles.upButton}
-            onTouchStart={handleUpButtonTouch}
-            onTouchEnd={handleButtonTouchEnd}
-            onMouseDown={handleUpButtonTouch}
-            onMouseUp={handleButtonTouchEnd}>▲</button>
-          <button
-            id="pauseButton"
-            className={`${styles.pauseButton} ${isCountdownActive ? styles.disabledButton : ''}`}
-            onClick={!isCountdownActive && gameStateRef.current.gameStatus !== 'countdown' ? togglePause : undefined}
-            disabled={isCountdownActive || gameStateRef.current.gameStatus === 'countdown'}
-          >
-            {isPaused ? '▶' : 'II'}
-          </button>
-          <button id="downButton"
-            className={styles.downButton}
-            onTouchStart={handleDownButtonTouch}
-            onTouchEnd={handleButtonTouchEnd}
-            onMouseDown={handleDownButtonTouch}
-            onMouseUp={handleButtonTouchEnd}>▼</button>
-        </div>
+        <MobileControls
+          handleUpButtonTouch={handleUpButtonTouch}
+          handleDownButtonTouch={handleDownButtonTouch}
+          handleButtonTouchEnd={handleButtonTouchEnd}
+          togglePause={togglePause}
+          isPaused={isPaused}
+          isCountdownActive={isCountdownActive}
+          gameStatus={gameStateRef.current.gameStatus}
+        />
       )}
     </div>
-  );}
+  );
+}
