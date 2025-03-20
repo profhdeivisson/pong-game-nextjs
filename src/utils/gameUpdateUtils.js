@@ -80,33 +80,31 @@ export function updateGame({
   const paddle2Left = containerWidth - 35;
 
   if (
-    state.ballX <= paddle1Right &&
-    state.ballX >= 10 &&
-    state.ballY + 20 >= state.paddle1Y &&
-    state.ballY <= state.paddle1Y + 100
+      state.ballX <= paddle1Right &&
+      state.ballX >= 10 &&
+      state.ballY + 20 >= state.paddle1Y &&
+      state.ballY <= state.paddle1Y + 100
   ) {
-    const hitPosition = ((state.ballY + 10) - (state.paddle1Y + 50)) / 50;
-    state.ballSpeedX = -state.ballSpeedX * state.paddleRebound;
-    state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
-    state.ballX = paddle1Right + 1;
-    state.ballSpeedX += (state.ballSpeedX > 0 ? state.ballAcceleration : -state.ballAcceleration);
-    
-    playSound('/ball-song.mp3');
+      const hitPosition = ((state.ballY + 10) - (state.paddle1Y + 50)) / 50;
+      state.ballSpeedX = -state.ballSpeedX * state.paddleRebound;
+      state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
+      state.ballX = paddle1Right + 1;
+      
+      playSound('/ball-song.mp3');
   }
-
+  
   if (
-    state.ballX + 20 >= paddle2Left &&
-    state.ballX <= containerWidth - 10 &&
-    state.ballY + 20 >= state.paddle2Y &&
-    state.ballY <= state.paddle2Y + 100
+      state.ballX + 20 >= paddle2Left &&
+      state.ballX <= containerWidth - 10 &&
+      state.ballY + 20 >= state.paddle2Y &&
+      state.ballY <= state.paddle2Y + 100
   ) {
-    const hitPosition = ((state.ballY + 10) - (state.paddle2Y + 50)) / 50;
-    state.ballSpeedX = -state.ballSpeedX * state.paddleRebound;
-    state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
-    state.ballX = paddle2Left - 21;
-    state.ballSpeedX += (state.ballSpeedX > 0 ? state.ballAcceleration : -state.ballAcceleration);
-    
-    playSound('/ball-song.mp3');
+      const hitPosition = ((state.ballY + 10) - (state.paddle2Y + 50)) / 50;
+      state.ballSpeedX = -state.ballSpeedX * state.paddleRebound;
+      state.ballSpeedY += hitPosition * state.ballSpinFactor * Math.abs(state.ballSpeedX);
+      state.ballX = paddle2Left - 21;
+      
+      playSound('/ball-song.mp3');
   }
 
   if (state.ballX < 0) {

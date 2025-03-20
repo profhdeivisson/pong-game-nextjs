@@ -21,7 +21,7 @@ export function useGameState() {
     paddle1Y: 0,
     paddle2Y: 0,
     paddleSpeed: 8,
-    ballBaseSpeed: 5,
+    ballBaseSpeed: 12,
     maxBallSpeed: 15,
     ballSpinFactor: 0.8,
     ballAcceleration: 0.05,
@@ -31,8 +31,17 @@ export function useGameState() {
     gameInterval: null,
     isPaused: false,
     isGameOver: false,
-    gameStatus: 'notStarted' // possible values: 'notStarted', 'countdown', 'running', 'paused', 'gameOver'
-  });
+    gameStatus: 'notStarted',
+    
+    resetGameState() {
+        this.ballX = 0;
+        this.ballY = 0;
+        this.ballSpeedX = (Math.random() > 0.5 ? 1 : -1) * this.ballBaseSpeed;
+        this.ballSpeedY = (Math.random() * 2 - 1) * this.ballBaseSpeed;
+        this.ballAcceleration = 0.05;
+        this.paddleSpeed = 8;
+    }
+});
 
   useEffect(() => {
     gameModeRef.current = gameMode;
