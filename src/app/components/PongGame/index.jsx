@@ -17,10 +17,7 @@ import { useGameState } from '@/hooks/useGameState';
 import { usePauseManager } from '@/hooks/usePauseManager';
 import { useCountdown } from '@/hooks/useCountdown';
 
-// Import new components
-import Button from '../Button';
 import GameMenu from '../GameMenu';
-import GameBoard from '../GameBoard';
 import InstructionsModal from '../InstructionsModal';
 import MobileControls from '../MobileControls';
 import CountdownOverlay from '../CountdownOverlay';
