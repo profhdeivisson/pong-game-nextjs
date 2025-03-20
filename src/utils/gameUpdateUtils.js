@@ -110,26 +110,30 @@ export function updateGame({
   if (state.ballX < 0) {
     setPlayer2Score(prevScore => {
       const newScore = prevScore + 1;
-
       if (player2ScoreRef.current) {
         player2ScoreRef.current.textContent = newScore.toString();
       }
-
-      setTimeout(() => checkGameOver(player1Score, newScore), 0);
+      // Only check game over if score reaches exactly 5
+      if (newScore === 5) {
+        setTimeout(() => checkGameOver(player1Score, newScore), 0);
+      }
       return newScore;
     });
     resetPositions();
-  } else if (state.ballX > containerWidth - 20) {
+} else if (state.ballX > containerWidth - 20) {
     setPlayer1Score(prevScore => {
       const newScore = prevScore + 1;
       if (player1ScoreRef.current) {
         player1ScoreRef.current.textContent = newScore.toString();
       }
-      setTimeout(() => checkGameOver(newScore, player2Score), 0);
+      // Only check game over if score reaches exactly 5
+      if (newScore === 5) {
+        setTimeout(() => checkGameOver(newScore, player2Score), 0);
+      }
       return newScore;
     });
     resetPositions();
-  }
+}
 
   ballRef.current.style.left = `${state.ballX}px`;
   ballRef.current.style.top = `${state.ballY}px`;

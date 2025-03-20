@@ -7,7 +7,7 @@ import { showMenu as showMenuUtil } from '@/utils/menuUtils';
 import { checkGameOver as checkGameOverUtil } from '@/utils/gameOverUtils';
 import { resetPositions as resetPositionsUtil } from '@/utils/positionUtils';
 import { updateGame as updateGameUtil } from '@/utils/gameUpdateUtils';
-import { 
+import {
   handleSinglePlayerClick as handleSinglePlayerClickUtil,
   handleMultiPlayerClick as handleMultiPlayerClickUtil,
   handleInstructionsClick as handleInstructionsClickUtil,
@@ -81,7 +81,15 @@ export default function PongGame() {
   }, [isCountdownActive, handleKeyDown]);
 
   function startGame(mode) {
+    // Reset game state before starting new game
     gameStateRef.current.isGameOver = false;
+    gameStateRef.current.isPaused = false;
+    gameStateRef.current.gameStatus = 'running';
+    gameStateRef.current.keys = {};
+
+    // Reset scores
+    setPlayer1Score(0);
+    setPlayer2Score(0);
 
     const refs = {
       menuRef,
@@ -92,7 +100,7 @@ export default function PongGame() {
       player2ScoreRef,
       gameStateRef
     };
-    
+
     initGame(mode, refs, setGameMode, setIsPaused, setPlayer1Score, setPlayer2Score, resetPositions, handleForceRenderPaddles, updateGame);
   }
 
@@ -104,7 +112,7 @@ export default function PongGame() {
       paddle1Ref,
       paddle2Ref
     };
-    
+
     resetPositionsUtil(positionParams);
   }
 
@@ -116,13 +124,10 @@ export default function PongGame() {
     if (player1ScoreRef.current) {
       player1ScoreRef.current.textContent = player1Score.toString();
     }
-  }, [player1Score]);
-
-  useEffect(() => {
     if (player2ScoreRef.current) {
       player2ScoreRef.current.textContent = player2Score.toString();
     }
-  }, [player2Score]);
+  }, [player1Score, player2Score]);
 
   function updateGame() {
     const updateParams = {
@@ -143,7 +148,7 @@ export default function PongGame() {
       resetPositions,
       checkGameOver
     };
-    
+
     updateGameUtil(updateParams);
   }
 
@@ -156,7 +161,7 @@ export default function PongGame() {
       gameOverMessageRef,
       gameOverModalRef
     };
-    
+
     checkGameOverUtil(gameOverParams);
   }
 
@@ -177,7 +182,7 @@ export default function PongGame() {
       setPlayer2Score,
       setIsPaused
     };
-    
+
     showMenuUtil(menuParams);
   }
 
@@ -194,7 +199,7 @@ export default function PongGame() {
     countdownNumberRef,
     handleKeyDown
   });
-  
+
   const { clearGameInterval } = usePauseManager({
     isPaused,
     gameStateRef,
@@ -207,7 +212,7 @@ export default function PongGame() {
     if (isCountdownActive || gameStateRef.current.gameStatus === 'countdown') {
       return;
     }
-    
+
     if (isPaused) {
       if (gameStateRef.current.gameInterval) {
         clearInterval(gameStateRef.current.gameInterval);
@@ -215,9 +220,9 @@ export default function PongGame() {
       }
     } else if (gameStateRef.current.gameStatus === 'running') {
       setTimeout(() => {
-        if (!gameStateRef.current.gameInterval && 
-            gameStateRef.current.gameStatus === 'running' && 
-            !gameStateRef.current.isPaused) {
+        if (!gameStateRef.current.gameInterval &&
+          gameStateRef.current.gameStatus === 'running' &&
+          !gameStateRef.current.isPaused) {
           gameStateRef.current.gameInterval = setInterval(updateGame, 1000 / 60);
         }
       }, 50);
@@ -232,7 +237,7 @@ export default function PongGame() {
       startCountdown,
       startGame
     };
-    
+
     handleSinglePlayerClickUtil(params);
   }
 
@@ -244,7 +249,7 @@ export default function PongGame() {
       startCountdown,
       startGame
     };
-    
+
     handleMultiPlayerClickUtil(params);
   }
 
@@ -258,7 +263,7 @@ export default function PongGame() {
 
   return (
     <div className={styles.container}>
-      <GameMenu 
+      <GameMenu
         menuRef={menuRef}
         onInstructionsClick={handleInstructionsClick}
         onSinglePlayerClick={handleSinglePlayerClick}
@@ -274,19 +279,19 @@ export default function PongGame() {
         <div id="ball" className={styles.ball} ref={ballRef}></div>
         <div id="paddle1" className={`${styles.paddle} paddle`} ref={paddle1Ref}></div>
         <div id="paddle2" className={`${styles.paddle} paddle`} ref={paddle2Ref}></div>
-        
+
         <div id="score" className={styles.score}>
           <span id="player1Score" className={styles.playerScore} ref={player1ScoreRef}>0</span>
           <span>:</span>
           <span id="player2Score" className={styles.playerScore} ref={player2ScoreRef}>0</span>
         </div>
-        
-        <CountdownOverlay 
+
+        <CountdownOverlay
           countdownOverlayRef={countdownOverlayRef}
           countdownNumberRef={countdownNumberRef}
         />
-        
-        <GameOverModal 
+
+        <GameOverModal
           gameOverModalRef={gameOverModalRef}
           gameOverMessageRef={gameOverMessageRef}
           onRestartGame={restartGame}
