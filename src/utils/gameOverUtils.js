@@ -10,7 +10,8 @@ export function checkGameOver({
 }) {
   const winningScore = 5;
 
-  if (p1Score >= winningScore || p2Score >= winningScore) {
+  // Change to exact match
+  if (p1Score === winningScore || p2Score === winningScore) {
     if (gameStateRef.current.gameInterval) {
       clearInterval(gameStateRef.current.gameInterval);
       gameStateRef.current.gameInterval = null;
